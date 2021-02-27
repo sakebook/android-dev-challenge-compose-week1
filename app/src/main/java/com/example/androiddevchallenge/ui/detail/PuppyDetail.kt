@@ -6,23 +6,30 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.androiddevchallenge.data.Puppy
+import com.example.androiddevchallenge.model.Puppy
+import com.example.androiddevchallenge.model.PuppyRepo
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
 @Composable
 fun PuppyDetail(puppyId: Int) {
-    val puppy = Puppy(puppyId, "", "", 0, "")
+    val puppy = PuppyRepo.getPuppyFromId(puppyId)
     MyTheme {
         DetailRoot(puppy = puppy)
     }
 }
 
 @Composable
-fun DetailRoot(puppy: Puppy) {
+fun DetailRoot(puppy: Puppy?) {
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
         topBar = { TopAppBar(title = { Text(text = "Puppies🐶") }) },
-        content = { DetailContent(puppy) }
+        content = {
+            if (puppy == null) {
+                DetailErrorContent()
+            } else {
+                DetailContent(puppy)
+            }
+        }
     )
 }
 
@@ -32,10 +39,23 @@ fun DetailContent(puppy: Puppy) {
     Text(text = "puppy id is ${puppy.id}")
 }
 
-@Preview("Detail Light Theme", widthDp = 360, heightDp = 640)
+@Composable
+fun DetailErrorContent() {
+    Text(text = "puppy id is none")
+}
+
+@Preview("Detail", widthDp = 360, heightDp = 640)
 @Composable
 fun LightPreview() {
     MyTheme {
-        DetailRoot(puppy = Puppy(0, "", "", 0, ""))
+        DetailRoot(puppy = Puppy(0, "", "", 0, "", ""))
+    }
+}
+
+@Preview("Detail Error", widthDp = 360, heightDp = 640)
+@Composable
+fun ErrorPreview() {
+    MyTheme {
+        DetailRoot(puppy = null)
     }
 }

@@ -31,9 +31,6 @@ fun NavGraph(startDestination: String = MainDestinations.HOME) {
         composable(MainDestinations.HOME) {
             HomeScreen(selectPuppy = actions.selectPuppy)
         }
-//        composable(MainDestinations.COURSES_ROUTE) {
-//            Courses(selectCourse = actions.selectCourse)
-//        }
         composable(
             "${MainDestinations.DETAIL}/{${MainDestinations.DETAIL_ID_KEY}}",
             arguments = listOf(navArgument(MainDestinations.DETAIL_ID_KEY) { type = NavType.IntType }),
