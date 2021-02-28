@@ -1,12 +1,16 @@
 package com.example.androiddevchallenge.ui.home
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -14,12 +18,16 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.transform.RoundedCornersTransformation
 import com.example.androiddevchallenge.model.Puppy
 import com.example.androiddevchallenge.model.PuppyRepo
 import com.example.androiddevchallenge.ui.theme.MyTheme
+import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun HomeScreen(selectPuppy: (Int) -> Unit) {
@@ -57,25 +65,43 @@ fun PuppiesList(selectPuppy: (Int) -> Unit) {
 fun PuppyCard(puppy: Puppy, selectPuppy: (Int) -> Unit) {
     Card(
         content = {
-            Row() {
-//                TODO("画像")
+            Row(modifier = Modifier.fillMaxWidth()) {
+                CoilImage(
+                    data = puppy.imageUrl,
+                    contentDescription = "",
+                    requestBuilder = {
+                        transformations(RoundedCornersTransformation(topRight = 8.dp.value, bottomRight = 8.dp.value))
+                    },
+                    fadeIn = true,
+                    modifier = Modifier
+                        .width(80.dp)
+                        .height(80.dp),
+                    contentScale = ContentScale.Crop
+
+                ) {
+
+                }
                 Column() {
-                    Row() {
+                    Row(modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween) {
                         Text(
-                            text = "name: ${puppy.name}",
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                            text = "🏷: ${puppy.name}",
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp).wrapContentWidth(),
                             style = MaterialTheme.typography.body1,
                         )
                         Text(
-                            text = "age: ${puppy.age}",
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                            text = "🗓: ${puppy.age}years",
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp).width(100.dp),
                             style = MaterialTheme.typography.body1,
+                            textAlign = TextAlign.Start
                         )
                     }
                     Text(
-                        text = "description: ${puppy.description}",
+                        text = puppy.description,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.body2,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
                     )
                 }
             }
