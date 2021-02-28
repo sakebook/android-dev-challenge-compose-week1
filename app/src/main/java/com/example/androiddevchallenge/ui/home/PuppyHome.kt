@@ -40,7 +40,7 @@ fun HomeScreen(selectPuppy: (Int) -> Unit) {
 fun HomeRoot(selectPuppy: (Int) -> Unit) {
     Scaffold(
         backgroundColor = MaterialTheme.colors.background,
-        topBar = { TopAppBar(title = { Text(text = "Puppies🐶") }) },
+        topBar = { TopAppBar(title = { Text(text = "\uD83D\uDC36Puppies") }) },
         content = { HomeContent(selectPuppy) }
     )
 }

@@ -36,7 +36,7 @@ fun NavGraph(startDestination: String = MainDestinations.HOME) {
             arguments = listOf(navArgument(MainDestinations.DETAIL_ID_KEY) { type = NavType.IntType }),
             content = {
                 val arguments = requireNotNull(it.arguments)
-                PuppyDetail(arguments.getInt(MainDestinations.DETAIL_ID_KEY))
+                PuppyDetail(arguments.getInt(MainDestinations.DETAIL_ID_KEY), actions.upPress)
             }
         )
     }
